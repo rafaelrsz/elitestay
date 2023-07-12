@@ -17,7 +17,7 @@ namespace EliteStay.Domain.BookingContext.Entities
       if (!room.IsAvailable(startDate, endDate))
         AddNotification("Room", "Quarto não está disponível");
 
-      if (startDate >= endDate)
+      if (startDate.Date >= endDate.Date)
         AddNotification("EndDate", "Data de saída invalida");
 
       if (startDate.Date < DateTime.Now.Date)
