@@ -33,6 +33,10 @@ namespace EliteStay.Domain.BookingContext.ValueObjects
       cpf = cpf.Replace(".", "").Replace("-", "");
       if (cpf.Length != 11)
         return false;
+
+      if (cpf.Distinct().Count() == 1)
+        return false;
+
       tempCpf = cpf.Substring(0, 9);
       soma = 0;
 
