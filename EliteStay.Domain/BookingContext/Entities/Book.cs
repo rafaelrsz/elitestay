@@ -2,7 +2,7 @@ using EliteStay.Domain.BookingContext.Enums;
 using EliteStay.Shared.Entities;
 using FluentValidator.Validation;
 
-namespace Elitestay.Domain.BookingContext.Entities
+namespace EliteStay.Domain.BookingContext.Entities
 {
   public class Book : Entity
   {
@@ -20,11 +20,11 @@ namespace Elitestay.Domain.BookingContext.Entities
       if (startDate >= endDate)
         AddNotification("EndDate", "Data de saída invalida");
 
-      if (startDate < DateTime.Now)
+      if (startDate.Date < DateTime.Now.Date)
         AddNotification("StartDate", "Data de entrada invalida");
 
-      room.Book(startDate, endDate);
-      status = EBookStatus.Booked;
+      if (Notifications.Count == 0)
+        room.Book(startDate, endDate);
     }
 
     public User user { get; private set; }

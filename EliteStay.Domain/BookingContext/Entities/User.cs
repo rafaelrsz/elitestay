@@ -2,7 +2,7 @@ using EliteStay.Domain.BookingContext.Enums;
 using EliteStay.Domain.BookingContext.ValueObjects;
 using EliteStay.Shared.Entities;
 
-namespace Elitestay.Domain.BookingContext.Entities
+namespace EliteStay.Domain.BookingContext.Entities
 {
   public class User : Entity
   {
