@@ -6,4 +6,15 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Dapper" Version="2.0.143" />
+    <PackageReference Include="dapper.contrib" Version="2.0.78" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\EliteStay.Shared\EliteStay.Shared.csproj" />
+    <ProjectReference Include="..\EliteStay.Domain\elitestay.domain.csproj" />
+  </ItemGroup>
+
 </Project>
