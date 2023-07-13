@@ -21,7 +21,7 @@ namespace EliteStay.Tests.Entities
     [TestMethod]
     public void ShouldBeAbleBookARoom()
     {
-      var book = new Book(user, room, DateTime.Now, DateTime.Now.AddDays(1), 50);
+      var book = new Book(user, room, DateTime.Now, DateTime.Now.AddDays(1));
       Assert.AreEqual(true, book.Valid);
       Assert.AreEqual(0, book.Notifications.Count);
     }
@@ -29,7 +29,7 @@ namespace EliteStay.Tests.Entities
     [TestMethod]
     public void ShouldNotBeAbleBookARoomWithStartDateBiggerThanEndDate()
     {
-      var book = new Book(user, room, DateTime.Now, DateTime.Now.AddDays(-1), 50);
+      var book = new Book(user, room, DateTime.Now, DateTime.Now.AddDays(-1));
       Assert.AreEqual(false, book.Valid);
       Assert.AreEqual(1, book.Notifications.Count);
     }
@@ -37,8 +37,8 @@ namespace EliteStay.Tests.Entities
     [TestMethod]
     public void ShouldNotBeAbleToBookANotAvailableRoom()
     {
-      var book1 = new Book(user, room, DateTime.Now, DateTime.Now.AddDays(1), 50);
-      var book2 = new Book(user, room, DateTime.Now, DateTime.Now.AddDays(1), 50);
+      var book1 = new Book(user, room, DateTime.Now, DateTime.Now.AddDays(1));
+      var book2 = new Book(user, room, DateTime.Now, DateTime.Now.AddDays(1));
 
       Assert.AreEqual(false, book2.Valid);
       Assert.AreEqual(1, book2.Notifications.Count);
@@ -47,7 +47,7 @@ namespace EliteStay.Tests.Entities
     [TestMethod]
     public void ShouldNotBeAbleBookARoomWithStartDateSmallerThanDateNow()
     {
-      var book = new Book(user, room, DateTime.Now.AddDays(-1), DateTime.Now, 50);
+      var book = new Book(user, room, DateTime.Now.AddDays(-1), DateTime.Now);
       Assert.AreEqual(false, book.Valid);
       Assert.AreEqual(1, book.Notifications.Count);
     }
