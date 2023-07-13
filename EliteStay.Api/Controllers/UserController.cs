@@ -32,7 +32,7 @@ namespace EliteStay.Api.Controllers
       return null;
     }
     [HttpGet]
-    [Route("/{id}")]
+    [Route("/{id}/books")]
     public List<Book> GetBooks(Guid id)
     {
       return null;
