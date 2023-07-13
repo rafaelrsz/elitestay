@@ -10,7 +10,7 @@ namespace EliteStay.Domain.BookingContext.Commands.BookCommands.Inputs
     public Guid Room { get; set; }
     public DateTime startDate { get; set; }
     public DateTime endDate { get; set; }
-    public bool Valid()
+    public bool IsValid()
     {
       AddNotifications(new ValidationContract()
           .HasLen(User.ToString(), 36, "User", "Identificador do usuário inválido")
