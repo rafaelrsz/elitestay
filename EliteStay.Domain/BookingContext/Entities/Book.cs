@@ -6,13 +6,13 @@ namespace EliteStay.Domain.BookingContext.Entities
 {
   public class Book : Entity
   {
-    public Book(User user, Room room, DateTime startDate, DateTime endDate, decimal dailyPrice)
+    public Book(User user, Room room, DateTime startDate, DateTime endDate)
     {
       this.user = user;
       this.room = room;
       this.startDate = startDate;
       this.endDate = endDate;
-      this.dailyPrice = dailyPrice;
+      this.status = EBookStatus.Booked;
 
       if (!room.IsAvailable(startDate, endDate))
         AddNotification("Room", "Quarto não está disponível");
@@ -32,7 +32,6 @@ namespace EliteStay.Domain.BookingContext.Entities
     public DateTime startDate { get; private set; }
     public DateTime endDate { get; private set; }
     public decimal? totalPrice { get; private set; }// quando finalizar deve retornar total do preço
-    public decimal dailyPrice { get; private set; }
     public EBookStatus status { get; private set; }
     public void CheckOut()
     {
@@ -43,7 +42,7 @@ namespace EliteStay.Domain.BookingContext.Entities
     }
     public decimal Pay()
     {
-      totalPrice = (endDate - startDate).Days * dailyPrice;
+      totalPrice = (endDate - startDate).Days * room.dailyPrice;
       status = EBookStatus.Payed;
 
       return totalPrice.Value;

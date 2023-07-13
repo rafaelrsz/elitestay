@@ -30,9 +30,6 @@ namespace EliteStay.Domain.BookingContext.Handlers
         AddNotification("Email", "Este Email já está em uso");
       }
 
-      if (Invalid)
-        return null;
-
       // criar VOs
       var name = new Name(command.firstName, command.lastName);
       var email = new Email(command.email);
@@ -45,6 +42,16 @@ namespace EliteStay.Domain.BookingContext.Handlers
                           command.phone, command.age,
                           (EUserPermission)command.permission);
 
+      AddNotifications(name.Notifications);
+      AddNotifications(document.Notifications);
+      AddNotifications(email.Notifications);
+      AddNotifications(user.Notifications);
+
+      if (Invalid)
+        return new CommandResult(
+            false,
+            "Por favor, corrija os campos abaixo",
+            Notifications);
       // Persistir em banco
       _repository.Save(user);
 
