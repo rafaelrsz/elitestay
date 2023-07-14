@@ -4,6 +4,7 @@ using EliteStay.Domain.BookingContext.Repositories;
 using EliteStay.Infra.DataContexts;
 using Dapper;
 using Dapper.Contrib.Extensions;
+using EliteStay.Domain.BookingContext.Queries;
 
 namespace EliteStay.Infra.BookingContext.Repositories
 {
@@ -54,6 +55,35 @@ namespace EliteStay.Infra.BookingContext.Repositories
               Age = (int)user.age,
               Permission = user.permission
             }, commandType: CommandType.StoredProcedure);
+    }
+
+    public ListUsersQueryResult Get(Guid id)
+    {
+      return
+        _context
+        .Connection
+        .Query<ListUsersQueryResult>("spGetUser",
+        new { id = id },
+        commandType: CommandType.StoredProcedure)
+        .FirstOrDefault() ?? new ListUsersQueryResult();
+    }
+
+    public IEnumerable<ListUsersQueryResult> Get()
+    {
+      return
+        _context
+        .Connection
+        .Query<ListUsersQueryResult>("spListUsers",
+        commandType: CommandType.StoredProcedure);
+    }
+
+    public void Delete(Guid id)
+    {
+      _context
+      .Connection
+      .Query("spDeleteUser"
+      , new { id = id },
+      commandType: CommandType.StoredProcedure);
     }
   }
 }

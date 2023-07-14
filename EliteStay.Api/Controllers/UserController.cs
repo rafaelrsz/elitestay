@@ -2,13 +2,14 @@ using EliteStay.Domain.BookingContext.Commands.UserCommands.Inputs;
 using EliteStay.Domain.BookingContext.Commands.UserCommands.Outputs;
 using EliteStay.Domain.BookingContext.Entities;
 using EliteStay.Domain.BookingContext.Handlers;
+using EliteStay.Domain.BookingContext.Queries;
 using EliteStay.Domain.BookingContext.Repositories;
+using EliteStay.Shared.Commands;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace EliteStay.Api.Controllers
 {
-  [Route("costumer")]
   public class UserController : Controller
   {
     private readonly IUserRepository _repository;
@@ -20,26 +21,26 @@ namespace EliteStay.Api.Controllers
     }
 
     [HttpGet]
-    [Route("")]
-    public List<User> Get()
+    [Route("/users")]
+    public List<ListUsersQueryResult> Get()
     {
-      return null;
+      return _repository.Get().ToList();
     }
     [HttpGet]
-    [Route("/{id}")]
-    public List<User> GetById(Guid id)
+    [Route("/users/{id}")]
+    public ListUsersQueryResult GetById(Guid id)
     {
-      return null;
+      return _repository.Get(id);
     }
     [HttpGet]
-    [Route("/{id}/books")]
+    [Route("/users/{id}/books")]
     public List<Book> GetBooks(Guid id)
     {
       return null;
     }
 
     [HttpPost]
-    [Route("/user")]
+    [Route("/users")]
     public object Post([FromBody] CreateUserCommand command)
     {
       var result = _handler.Handle(command);
@@ -50,18 +51,17 @@ namespace EliteStay.Api.Controllers
       return (CreateUserCommandResult)result;
     }
 
-    [HttpPut]
-    [Route("/{id}")]
-    public User Delete(User user)
-    {
-      return null;
-    }
-
     [HttpDelete]
-    [Route("/{id}")]
-    public User Delete(Guid id)
+    [Route("/users/{id}")]
+    public IActionResult Delete(Guid id)
     {
-      return null;
+      if (this.GetById(id).id == Guid.Empty)
+      {
+        return NotFound("Usuario não encontrado");
+      }
+
+      _repository.Delete(id);
+      return Ok("Usuario deletado com sucesso");
     }
   }
 }

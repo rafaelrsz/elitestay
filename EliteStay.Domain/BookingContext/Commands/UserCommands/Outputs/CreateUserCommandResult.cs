@@ -5,7 +5,7 @@ namespace EliteStay.Domain.BookingContext.Commands.UserCommands.Outputs
   public class CreateUserCommandResult : ICommandResult
   {
     public CreateUserCommandResult() { }
-    public CreateUserCommandResult(Guid id, string firstName, string lastName, string email, string document, string phone, uint age, int permission)
+    public CreateUserCommandResult(Guid id, string firstName, string lastName, string email, string document, string phone, uint age, string permission)
     {
       this.id = id;
       this.firstName = firstName;
@@ -24,7 +24,7 @@ namespace EliteStay.Domain.BookingContext.Commands.UserCommands.Outputs
     public string document { get; set; } = "";
     public string phone { get; set; } = "";
     public uint age { get; set; }
-    public int permission { get; set; }
+    public string permission { get; set; } = "";
   }
 }
 

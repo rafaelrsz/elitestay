@@ -24,7 +24,8 @@ namespace EliteStay.Domain.BookingContext.Entities
       this.permission = permission;
 
       AddNotifications(new ValidationContract()
-          .IsGreaterOrEqualsThan(((int)age), 18, "Idade", "Você precisa ser maior de idade para criar um usuário"));
+          .IsGreaterOrEqualsThan(((int)age), 18, "Idade", "Você precisa ser maior de idade para criar um usuário")
+          );
     }
 
     public Name name { get; private set; }

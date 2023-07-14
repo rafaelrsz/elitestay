@@ -1,0 +1,5 @@
+CREATE PROCEDURE spDeleteUser
+  @Id UNIQUEIDENTIFIER
+AS
+		DELETE [User]
+    WHERE [User].[Id] = @Id

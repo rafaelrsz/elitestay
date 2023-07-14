@@ -8,6 +8,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddMvc(options => options.EnableEndpointRouting = false);
 builder.Services.AddScoped<EliteStayDataContext, EliteStayDataContext>();
 builder.Services.AddTransient<IUserRepository, UserRepository>();
+builder.Services.AddTransient<IRoomRepository, RoomRepository>();
+builder.Services.AddTransient<RoomHandler, RoomHandler>();
 builder.Services.AddTransient<UserHandler, UserHandler>();
 
 
