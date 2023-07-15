@@ -11,7 +11,7 @@ namespace EliteStay.Tests.Fakes
 
     public bool Verify(string passwordHash, string inputPassword)
     {
-      return passwordHash == inputPassword;
+      return passwordHash.Equals(inputPassword);
     }
   }
 }

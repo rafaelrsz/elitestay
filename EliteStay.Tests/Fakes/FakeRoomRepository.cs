@@ -1,4 +1,3 @@
-using EliteStay.Domain.BookingContext.Commands.UserCommands.Inputs;
 using EliteStay.Domain.BookingContext.Entities;
 using EliteStay.Domain.BookingContext.Queries;
 using EliteStay.Domain.BookingContext.Repositories;
@@ -19,7 +18,7 @@ namespace EliteStay.Tests.Fakes
 
     public ListRoomQueryResult Get(Guid id)
     {
-      return new ListRoomQueryResult();
+      return new ListRoomQueryResult() { id = Guid.NewGuid() };
     }
 
     public IEnumerable<ListRoomQueryResult> Get()

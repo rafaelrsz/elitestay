@@ -6,7 +6,7 @@ using EliteStay.Tests.Fakes;
 namespace EliteStay.Tests.Handlers
 {
   [TestClass]
-  public class CreateUserHandler
+  public class UserHandlerTests
   {
     [TestMethod]
     public void ShouldBeAbleToRegisterAnUser()
@@ -27,6 +27,20 @@ namespace EliteStay.Tests.Handlers
       var result = handler.Handle(command);
 
       Assert.AreNotEqual(null, result);
+      Assert.AreEqual(true, handler.Valid);
+    }
+
+    [TestMethod]
+    public void ShouldBeAbleToAuthenticateAnUser()
+    {
+      var command = new AuthenticateUserCommand();
+      command.email = "a@gmail.com";
+      command.password = "password";
+
+      Assert.AreEqual(true, command.IsValid());
+
+      var handler = new UserHandler(new FakeUserRepository(), new FakePasswordHasher(), new FakeTokenService());
+
       Assert.AreEqual(true, handler.Valid);
     }
   }

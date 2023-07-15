@@ -1,5 +1,6 @@
 using EliteStay.Domain.BookingContext.Commands.UserCommands.Inputs;
 using EliteStay.Domain.BookingContext.Entities;
+using EliteStay.Domain.BookingContext.Enums;
 using EliteStay.Domain.BookingContext.Queries;
 using EliteStay.Domain.BookingContext.Repositories;
 using EliteStay.Domain.BookingContext.ValueObjects;
@@ -25,7 +26,7 @@ namespace EliteStay.Tests.Fakes
 
     public ListUsersQueryResult Get(Guid id)
     {
-      return new ListUsersQueryResult();
+      return new ListUsersQueryResult() { id = Guid.NewGuid() };
     }
 
     public IEnumerable<ListUsersQueryResult> Get()
@@ -35,7 +36,7 @@ namespace EliteStay.Tests.Fakes
 
     public GetFullUserQueryResult Get(Email email)
     {
-      throw new NotImplementedException();
+      return new GetFullUserQueryResult() { password = "password" };
     }
 
     public void Save(User user)
