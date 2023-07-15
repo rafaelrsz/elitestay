@@ -79,16 +79,20 @@ namespace EliteStay.Api.Controllers
     [HttpGet]
     [Route("/books/{id}")]
     [Authorize]
-    public ListBookQueryResult Get(Guid id)
+    public ListBookQueryResult? Get(Guid id)
     {
-      return _repository.Get(id);
+      var response = _repository.Get(id);
+      if (response.id == Guid.Empty)
+        return null;
+
+      return response;
     }
 
     /// <summary>
     /// Lista as reservas de um determinado usuário.
     /// </summary>
     [HttpGet]
-    [Route("/users/{id}/books")]
+    [Route("/users/{userId}/books")]
     [Authorize]
     public List<ListBookQueryResult> GetBooksByUser(Guid userId)
     {
@@ -99,7 +103,7 @@ namespace EliteStay.Api.Controllers
     /// Lista as reservas de um determinado quarto.
     /// </summary>
     [HttpGet]
-    [Route("/rooms/{id}/books")]
+    [Route("/rooms/{roomId}/books")]
     [Authorize]
     public List<ListBookQueryResult> GetBooksByRoom(Guid roomId)
     {
