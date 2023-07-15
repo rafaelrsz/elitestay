@@ -5,6 +5,7 @@ using EliteStay.Domain.BookingContext.Handlers;
 using EliteStay.Domain.BookingContext.Queries;
 using EliteStay.Domain.BookingContext.Repositories;
 using EliteStay.Shared.Commands;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
@@ -20,39 +21,50 @@ namespace EliteStay.Api.Controllers
       _handler = handler;
     }
 
+    /// <summary>
+    /// Lista os usuários do sistema.
+    /// </summary>
     [HttpGet]
     [Route("/users")]
+    [Authorize(Roles = "Admin")]
     public List<ListUsersQueryResult> Get()
     {
       return _repository.Get().ToList();
     }
+
+    /// <summary>
+    /// Lista um usuário do sistema.
+    /// </summary>
     [HttpGet]
     [Route("/users/{id}")]
+    [Authorize(Roles = "Admin")]
     public ListUsersQueryResult GetById(Guid id)
     {
       return _repository.Get(id);
     }
-    [HttpGet]
-    [Route("/users/{id}/books")]
-    public List<Book> GetBooks(Guid id)
-    {
-      return null;
-    }
 
+    /// <summary>
+    /// Cria um usuário.
+    /// </summary>
     [HttpPost]
     [Route("/users")]
-    public object Post([FromBody] CreateUserCommand command)
+    [AllowAnonymous]
+    public IActionResult Post([FromBody] CreateUserCommand command)
     {
       var result = _handler.Handle(command);
 
       if (_handler.Invalid || result is null)
         return BadRequest(_handler.Notifications);
 
-      return (CreateUserCommandResult)result;
+      return Ok(result);
     }
 
+    /// <summary>
+    /// Apaga um usuário do sistema.
+    /// </summary>
     [HttpDelete]
     [Route("/users/{id}")]
+    [Authorize(Roles = "Admin")]
     public IActionResult Delete(Guid id)
     {
       if (this.GetById(id).id == Guid.Empty)
@@ -60,8 +72,29 @@ namespace EliteStay.Api.Controllers
         return NotFound("Usuario não encontrado");
       }
 
+      if (_repository.ValidateExclusion(id))
+      {
+        return NotFound("Usuario possui uma reserva cadastrada! Não é possível fazer a exclusão.");
+      }
+
       _repository.Delete(id);
       return Ok("Usuario deletado com sucesso");
+    }
+
+    /// <summary>
+    /// Gera o token de autenticação do usuário.
+    /// </summary>
+    [HttpPost]
+    [Route("/authenticate")]
+    [AllowAnonymous]
+    public IActionResult Authenticate([FromBody] AuthenticateUserCommand command)
+    {
+      var result = _handler.Handle(command);
+
+      if (_handler.Invalid || result is null)
+        return BadRequest(_handler.Notifications);
+
+      return Ok(result);
     }
   }
 }

@@ -1,4 +1,5 @@
 using EliteStay.Domain.BookingContext.Commands.UserCommands.Inputs;
+using EliteStay.Domain.BookingContext.Enums;
 using EliteStay.Domain.BookingContext.Handlers;
 using EliteStay.Tests.Fakes;
 
@@ -17,7 +18,7 @@ namespace EliteStay.Tests.Handlers
       command.email = "email@example.com";
       command.password = "1234";
       command.age = 18;
-      command.permission = 1;
+      command.permission = EUserPermission.Normal;
       command.phone = "32148664";
 
       Assert.AreEqual(true, command.IsValid());

@@ -2,7 +2,7 @@ using System.Data;
 using System.Data.SqlClient;
 using EliteStay.Shared;
 
-namespace EliteStay.Infra.DataContexts
+namespace EliteStay.Infra.BookingContext.DataContexts
 {
   public class EliteStayDataContext : IDisposable
   {

@@ -4,7 +4,7 @@ USE [elitestay]
 CREATE TABLE [User]
 (
 	[Id] UNIQUEIDENTIFIER PRIMARY KEY NOT NULL,
-  [Password] VARCHAR(64) NOT NULL,
+  [Password] VARCHAR(89) NOT NULL,
 	[FirstName] VARCHAR(40) NOT NULL,
 	[LastName] VARCHAR(40) NOT NULL,
 	[Document] CHAR(11) NOT NULL,
@@ -31,6 +31,7 @@ CREATE TABLE [Book]
 	[StartDate] DATETIME NOT NULL,
 	[EndDate] DATETIME NOT NULL,
 	[Status] INT NOT NULL,
+  [TotalPrice] MONEY NOT NULL
   FOREIGN KEY([UserId]) REFERENCES [User]([Id]),
   FOREIGN KEY([RoomId]) REFERENCES [Room]([Id])
 )

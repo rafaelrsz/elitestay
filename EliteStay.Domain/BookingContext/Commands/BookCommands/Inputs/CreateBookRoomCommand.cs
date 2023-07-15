@@ -4,17 +4,17 @@ using FluentValidator.Validation;
 
 namespace EliteStay.Domain.BookingContext.Commands.BookCommands.Inputs
 {
-  public class BookRoomCommand : Notifiable, ICommand
+  public class CreateBookRoomCommand : Notifiable, ICommand
   {
-    public Guid User { get; set; }
-    public Guid Room { get; set; }
+    public Guid UserId { get; set; }
+    public Guid RoomId { get; set; }
     public DateTime startDate { get; set; }
     public DateTime endDate { get; set; }
     public bool IsValid()
     {
       AddNotifications(new ValidationContract()
-          .HasLen(User.ToString(), 36, "User", "Identificador do usuário inválido")
-          .HasLen(Room.ToString(), 36, "Book", "Identificador do quarto inválido")
+          .HasLen(UserId.ToString(), 36, "User", "Identificador do usuário inválido")
+          .HasLen(RoomId.ToString(), 36, "Book", "Identificador do quarto inválido")
           .IsLowerThan(startDate.Date, DateTime.Now.Date, "StartDate", "Data de entrada invalida")
           .IsLowerOrEqualsThan(endDate.Date, startDate.Date, "EndDate", "Data de saída invalida"));
 

@@ -2,7 +2,7 @@ CREATE PROCEDURE spCreateUser
     @Id UNIQUEIDENTIFIER,
     @FirstName VARCHAR(40),
     @LastName VARCHAR(40),
-    @Password VARCHAR(64),
+    @Password VARCHAR(89),
     @Document CHAR(11),
     @Email VARCHAR(160),
     @Phone VARCHAR(13),

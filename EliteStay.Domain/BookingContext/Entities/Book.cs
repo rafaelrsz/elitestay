@@ -17,7 +17,7 @@ namespace EliteStay.Domain.BookingContext.Entities
       if (!room.IsAvailable(startDate, endDate))
         AddNotification("Room", "Quarto não está disponível");
 
-      if (startDate.Date >= endDate.Date)
+      if (startDate.Date > endDate.Date)
         AddNotification("EndDate", "Data de saída invalida");
 
       if (startDate.Date < DateTime.Now.Date)
@@ -25,13 +25,15 @@ namespace EliteStay.Domain.BookingContext.Entities
 
       if (Notifications.Count == 0)
         room.Book(startDate, endDate);
+
+      totalPrice = ((endDate - startDate).Days + 1) * room.dailyPrice;
     }
 
     public User user { get; private set; }
     public Room room { get; private set; }
     public DateTime startDate { get; private set; }
     public DateTime endDate { get; private set; }
-    public decimal? totalPrice { get; private set; }// quando finalizar deve retornar total do preço
+    public decimal totalPrice { get; private set; }// quando finalizar deve retornar total do preço
     public EBookStatus status { get; private set; }
     public void CheckOut()
     {
@@ -39,13 +41,6 @@ namespace EliteStay.Domain.BookingContext.Entities
         AddNotification("Status", "Reserva ainda não foi paga!");
 
       status = EBookStatus.Finished;
-    }
-    public decimal Pay()
-    {
-      totalPrice = (endDate - startDate).Days * room.dailyPrice;
-      status = EBookStatus.Payed;
-
-      return totalPrice.Value;
     }
     public void Cancel()
     {

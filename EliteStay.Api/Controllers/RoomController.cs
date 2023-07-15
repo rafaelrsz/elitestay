@@ -5,6 +5,7 @@ using EliteStay.Domain.BookingContext.Handlers;
 using EliteStay.Domain.BookingContext.Queries;
 using EliteStay.Domain.BookingContext.Repositories;
 using EliteStay.Shared.Commands;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
@@ -20,8 +21,13 @@ namespace EliteStay.Api.Controllers
       _handler = handler;
     }
 
+
+    /// <summary>
+    /// Cria um quarto no sistema.
+    /// </summary>
     [HttpPost]
     [Route("/rooms")]
+    [Authorize(Roles = "Admin")]
     public object Post([FromBody] CreateRoomCommand command)
     {
       var result = _handler.Handle(command);
@@ -32,27 +38,45 @@ namespace EliteStay.Api.Controllers
       return (CreateRoomCommandResult)result;
     }
 
+
+    /// <summary>
+    /// Lista os quartos do sistema.
+    /// </summary>
     [HttpGet]
     [Route("/rooms")]
+    [AllowAnonymous]
     public List<ListRoomQueryResult> Get()
     {
       return _repository.Get().ToList();
     }
 
+    /// <summary>
+    /// Lista um quarto do sistema.
+    /// </summary>
     [HttpGet]
     [Route("/rooms/{id}")]
+    [AllowAnonymous]
     public ListRoomQueryResult Get(Guid id)
     {
       return _repository.Get(id);
     }
 
+    /// <summary>
+    /// Apaga um quarto do sistema.
+    /// </summary>
     [HttpDelete]
     [Route("/rooms/{id}")]
+    [Authorize(Roles = "Admin")]
     public IActionResult Delete(Guid id)
     {
       if (this.Get(id).id == Guid.Empty)
       {
         return NotFound("Quarto não encontrado");
+      }
+
+      if (_repository.ValidateExclusion(id))
+      {
+        return NotFound("Usuario possui uma reserva cadastrada! Não é possível fazer a exclusão.");
       }
 
       _repository.Delete(id);

@@ -28,6 +28,21 @@ namespace EliteStay.Domain.BookingContext.Entities
           );
     }
 
+    public User(Guid id,
+    Name name,
+    Email email,
+    Document document,
+    EUserPermission permission)
+    {
+      this.Id = id;
+      this.name = name;
+      this.password = "";
+      this.email = email;
+      this.phone = "";
+      this.age = 18;
+      this.document = document;
+      this.permission = permission;
+    }
     public Name name { get; private set; }
     public string password { get; private set; }
     public Email email { get; private set; }

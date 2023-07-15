@@ -37,7 +37,7 @@ namespace EliteStay.Domain.BookingContext.Handlers
 
       _repository.Save(room);
 
-      return new CreateRoomCommandResult(command.description,
+      return new CreateRoomCommandResult(room.Id, command.description,
         command.location, command.dailyPrice, command.capacity);
     }
   }

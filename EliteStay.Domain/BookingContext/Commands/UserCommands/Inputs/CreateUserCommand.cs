@@ -1,3 +1,4 @@
+using EliteStay.Domain.BookingContext.Enums;
 using EliteStay.Shared.Commands;
 using FluentValidator;
 using FluentValidator.Validation;
@@ -13,7 +14,7 @@ namespace EliteStay.Domain.BookingContext.Commands.UserCommands.Inputs
     public string document { get; set; } = "";
     public string phone { get; set; } = "";
     public uint age { get; set; }
-    public int permission { get; set; }
+    public EUserPermission permission { get; set; }
 
     public bool IsValid()
     {

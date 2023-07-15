@@ -1,10 +1,11 @@
 using System.Data;
 using EliteStay.Domain.BookingContext.Entities;
 using EliteStay.Domain.BookingContext.Repositories;
-using EliteStay.Infra.DataContexts;
+using EliteStay.Infra.BookingContext.DataContexts;
 using Dapper;
 using Dapper.Contrib.Extensions;
 using EliteStay.Domain.BookingContext.Queries;
+using EliteStay.Domain.BookingContext.ValueObjects;
 
 namespace EliteStay.Infra.BookingContext.Repositories
 {
@@ -84,6 +85,40 @@ namespace EliteStay.Infra.BookingContext.Repositories
       .Query("spDeleteUser"
       , new { id = id },
       commandType: CommandType.StoredProcedure);
+    }
+
+    public bool CheckAuth(string email, string passwordHash)
+    {
+      return _context
+        .Connection
+        .Query<bool>(
+            "spCheckAuth",
+            new { Email = email, PasswordHash = passwordHash },
+            commandType: CommandType.StoredProcedure)
+        .FirstOrDefault();
+    }
+
+    public GetFullUserQueryResult Get(Email email)
+    {
+      return
+      _context
+        .Connection
+        .Query<GetFullUserQueryResult>("spGetUserByEmail",
+        new { Email = email.Address },
+        commandType: CommandType.StoredProcedure)
+        .FirstOrDefault() ?? new GetFullUserQueryResult();
+    }
+
+    public bool ValidateExclusion(Guid id)
+    {
+      return
+      _context
+        .Connection
+        .Query<bool>(
+            "spValidateUserExclusion",
+            new { Id = id },
+            commandType: CommandType.StoredProcedure)
+        .FirstOrDefault();
     }
   }
 }

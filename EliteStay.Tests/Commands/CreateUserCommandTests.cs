@@ -1,4 +1,5 @@
 using EliteStay.Domain.BookingContext.Commands.UserCommands.Inputs;
+using EliteStay.Domain.BookingContext.Enums;
 
 namespace EliteStay.Tests.Commands
 {
@@ -14,7 +15,7 @@ namespace EliteStay.Tests.Commands
       command.email = "email@example.com";
       command.password = "1234";
       command.age = 18;
-      command.permission = 1;
+      command.permission = EUserPermission.Normal;
       command.phone = "32148664";
 
       Assert.AreEqual(true, command.IsValid());
@@ -30,7 +31,7 @@ namespace EliteStay.Tests.Commands
       command.email = "email@example.com";
       command.password = "1234";
       command.age = 18;
-      command.permission = 1;
+      command.permission = EUserPermission.Normal;
       command.phone = "32148664";
 
       Assert.AreEqual(false, command.IsValid());

@@ -3,6 +3,8 @@ using EliteStay.Domain.BookingContext.Commands.UserCommands.Outputs;
 using EliteStay.Domain.BookingContext.Entities;
 using EliteStay.Domain.BookingContext.Enums;
 using EliteStay.Domain.BookingContext.Repositories;
+using EliteStay.Domain.BookingContext.Services;
+using EliteStay.Domain.BookingContext.Utils;
 using EliteStay.Domain.BookingContext.ValueObjects;
 using EliteStay.Shared.Commands;
 using FluentValidator;
@@ -12,9 +14,13 @@ namespace EliteStay.Domain.BookingContext.Handlers
   public class UserHandler : Notifiable, ICommandHandler<CreateUserCommand>
   {
     private readonly IUserRepository _repository;
-    public UserHandler(IUserRepository repository)
+    private readonly IPasswordHasher _passwordHasher;
+    private readonly ITokenService _tokenService;
+    public UserHandler(IUserRepository repository, IPasswordHasher passwordHasher, ITokenService tokenService)
     {
       _repository = repository;
+      _passwordHasher = passwordHasher;
+      _tokenService = tokenService;
     }
     public ICommandResult? Handle(CreateUserCommand command)
     {
@@ -35,8 +41,10 @@ namespace EliteStay.Domain.BookingContext.Handlers
       if (!Enum.IsDefined(typeof(EUserPermission), command.permission))
       {
         AddNotification("Permission", "Permissão do usuário inválida");
-        command.permission = 1;
+        command.permission = EUserPermission.Normal;
       }
+
+      command.password = _passwordHasher.Hash(command.password);
 
       var user = new User(name, command.password, email, document,
                           command.phone, command.age,
@@ -62,7 +70,40 @@ namespace EliteStay.Domain.BookingContext.Handlers
         document.Number,
         user.phone,
         user.age,
-        command.permission == 1 ? "Normal" : "Admin");
+        command.permission.ToString());
+    }
+
+    public ICommandResult? Handle(AuthenticateUserCommand command)
+    {
+
+      var email = new Email(command.email);
+      if (!_repository.CheckEmail(command.email))
+        AddNotification("Email", "Email não encontrado");
+
+      if (Invalid)
+        return new CommandResult(
+            false,
+            "Entrada invalida",
+            Notifications);
+
+      var user = _repository.Get(email);
+
+      var sucess = _passwordHasher.Verify(user.password, command.password);
+
+      if (!sucess)
+        AddNotification("Credentials", "Email ou senha incorretos");
+
+      if (Invalid)
+        return new CommandResult(
+            false,
+            "Entrada invalida",
+            Notifications);
+
+      var userEntity = new User(user.id, null!, null!, null!, user.permission);
+
+      var token = _tokenService.GenerateToken(userEntity);
+
+      return new AuthenticateUserCommandResult(token, user.email);
     }
   }
 }

@@ -10,5 +10,6 @@ namespace EliteStay.Domain.BookingContext.Repositories
     ListRoomQueryResult Get(Guid id);
     IEnumerable<ListRoomQueryResult> Get();
     void Delete(Guid id);
+    bool ValidateExclusion(Guid id);
   }
 }

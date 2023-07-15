@@ -14,6 +14,17 @@ namespace EliteStay.Domain.BookingContext.Entities
 
       this.status = new Dictionary<DateTime, ERoomStatus>();
     }
+
+    public Room(Guid id, string description, string location, decimal dailyPrice, uint capacity)
+    {
+      this.Id = id;
+      this.description = description;
+      this.location = location;
+      this.dailyPrice = dailyPrice;
+      this.capacity = capacity;
+
+      this.status = new Dictionary<DateTime, ERoomStatus>();
+    }
     public string description { get; private set; }
     public string location { get; private set; }
     public decimal dailyPrice { get; private set; }
