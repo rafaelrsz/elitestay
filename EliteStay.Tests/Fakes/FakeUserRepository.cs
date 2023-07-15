@@ -2,6 +2,7 @@ using EliteStay.Domain.BookingContext.Commands.UserCommands.Inputs;
 using EliteStay.Domain.BookingContext.Entities;
 using EliteStay.Domain.BookingContext.Queries;
 using EliteStay.Domain.BookingContext.Repositories;
+using EliteStay.Domain.BookingContext.ValueObjects;
 
 namespace EliteStay.Tests.Fakes
 {
@@ -32,9 +33,19 @@ namespace EliteStay.Tests.Fakes
       return new List<ListUsersQueryResult>() { new ListUsersQueryResult() };
     }
 
+    public GetFullUserQueryResult Get(Email email)
+    {
+      throw new NotImplementedException();
+    }
+
     public void Save(User user)
     {
 
+    }
+
+    public bool ValidateExclusion(Guid id)
+    {
+      return false;
     }
   }
 }

@@ -23,7 +23,7 @@ namespace EliteStay.Tests.Handlers
 
       Assert.AreEqual(true, command.IsValid());
 
-      var handler = new UserHandler(new FakeUserRepository());
+      var handler = new UserHandler(new FakeUserRepository(), new FakePasswordHasher(), new FakeTokenService());
       var result = handler.Handle(command);
 
       Assert.AreNotEqual(null, result);

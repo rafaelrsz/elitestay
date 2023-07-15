@@ -1,6 +1,7 @@
 using EliteStay.Domain.BookingContext.Commands.BookCommands.Inputs;
 namespace EliteStay.Tests.Commands
 {
+  [TestClass]
   public class BookRoomCommandTests
   {
     [TestMethod]

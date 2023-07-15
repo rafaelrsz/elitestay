@@ -15,6 +15,8 @@ namespace EliteStay.Domain.BookingContext.Commands.BookCommands.Inputs
       AddNotifications(new ValidationContract()
           .HasLen(UserId.ToString(), 36, "User", "Identificador do usuário inválido")
           .HasLen(RoomId.ToString(), 36, "Book", "Identificador do quarto inválido")
+          .AreNotEquals(UserId, Guid.Empty, "User", "Identificador do usuário inválido")
+          .AreNotEquals(RoomId, Guid.Empty, "Room", "Identificador do usuário inválido")
           .IsLowerThan(startDate.Date, DateTime.Now.Date, "StartDate", "Data de entrada invalida")
           .IsLowerOrEqualsThan(endDate.Date, startDate.Date, "EndDate", "Data de saída invalida"));
 

@@ -3,6 +3,7 @@ using EliteStay.Domain.BookingContext.Enums;
 
 namespace EliteStay.Tests.Commands
 {
+  [TestClass]
   public class CreateUserCommandTests
   {
     [TestMethod]

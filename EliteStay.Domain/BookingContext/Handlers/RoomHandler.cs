@@ -1,4 +1,4 @@
-using EliteStay.Domain.BookingContext.Commands.UserCommands.Inputs;
+using EliteStay.Domain.BookingContext.Commands.RoomCommands.Inputs;
 using EliteStay.Domain.BookingContext.Commands.UserCommands.Outputs;
 using EliteStay.Domain.BookingContext.Entities;
 using EliteStay.Domain.BookingContext.Enums;

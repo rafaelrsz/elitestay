@@ -30,5 +30,10 @@ namespace EliteStay.Tests.Fakes
     public void Save(Room room)
     {
     }
+
+    public bool ValidateExclusion(Guid id)
+    {
+      return false;
+    }
   }
 }

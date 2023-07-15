@@ -2,7 +2,7 @@ using EliteStay.Shared.Commands;
 using FluentValidator;
 using FluentValidator.Validation;
 
-namespace EliteStay.Domain.BookingContext.Commands.UserCommands.Inputs
+namespace EliteStay.Domain.BookingContext.Commands.RoomCommands.Inputs
 {
   public class CreateRoomCommand : Notifiable, ICommand
   {
