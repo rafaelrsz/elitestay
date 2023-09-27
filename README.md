@@ -189,8 +189,8 @@ Book --> User
 
 ```
 
-### Testes unitários
-* Durante o desenvolvimento da API, implementei vários testes unitários de modo a garantir o bom funcionamento da aplicação. Eles podem ser executados através do comando *"dotnet test"*.
+### Testes de unidade
+* Durante o desenvolvimento da API, implementei vários testes de unidade de modo a garantir o bom funcionamento da aplicação. Eles podem ser executados através do comando *"dotnet test"*.
 ```bash
 dotnet test
 ```
