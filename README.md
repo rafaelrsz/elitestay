@@ -2,8 +2,6 @@
 
 ### Motivação
 
-* Este projeto foi desenvolvido como parte de um teste prático de um processo seletivo para a vaga de desenvolvedor C# Jr. na empresa Ploomes.
-
 * Meu objetivo principal ao desenvolver esta API foi tentar aplicar o máximo de conceitos possíveis de modo a demonstrar meu conhecimento (e também praticá-los) no desenvolvimento da aplicação como um todo.
 
 * Qualquer dúvida sobre o projeto ou dificuldade para executá-lo, não hesite em me contatar. Meu email é rafa.rsouz@gmail.com. Você também pode me contatar via [Linkedin](https://www.linkedin.com/in/rafaelrsz/).
